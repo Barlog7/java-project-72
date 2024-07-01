@@ -35,9 +35,9 @@ public class App {
 /*        Logger logger = LoggerFactory.getLogger(App.class);
         logger.info("Hello World");*/
         var hikariConfig = new HikariConfig();
-        String jdbc = getJDBC();
-        //hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
-        hikariConfig.setJdbcUrl(jdbc);
+        //String jdbc = getJDBC();
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+        //hikariConfig.setJdbcUrl(jdbc);
 
         var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
@@ -62,6 +62,8 @@ public class App {
     }
     private static String readResourceFile(String fileName) throws IOException {
         var inputStream = App.class.getClassLoader().getResourceAsStream(fileName);
+        //var inputStream = App.class.getClassLoader().getResourceAsStream("schema.sql");
+        //var imp = App.class.getClassLoader().getResourceAsStream("schema.sql");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             return reader.lines().collect(Collectors.joining("\n"));
         }
