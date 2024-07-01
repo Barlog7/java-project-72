@@ -35,9 +35,9 @@ public class App {
 /*        Logger logger = LoggerFactory.getLogger(App.class);
         logger.info("Hello World");*/
         var hikariConfig = new HikariConfig();
-        //String jdbc = getJDBC();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
-        //hikariConfig.setJdbcUrl(jdbc);
+        String jdbc = getJDBC();
+        //hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+        hikariConfig.setJdbcUrl(jdbc);
 
         var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
