@@ -20,6 +20,11 @@ repositories {
 }
 
 dependencies {
+    //implementation("com.h2database:h2:2.2.224")
+    implementation("com.h2database:h2:2.2.220")
+
+    implementation("com.zaxxer:HikariCP:5.1.0")
+
     implementation("io.javalin:javalin:6.1.3")
     implementation("org.slf4j:slf4j-simple:2.0.7")
     implementation("io.javalin:javalin-rendering:6.1.3")
