@@ -15,6 +15,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.ResourceCodeResolver;
+
 @Slf4j
 public class App {
 
@@ -24,13 +28,16 @@ public class App {
         log.info("какой-то лог");
         var app = getApp();
 
-        app.start();
+        app.get("/", ctx -> ctx.render("main.jte"));
+
+
+        app.start(getPort());
     }
+
     public static Javalin getApp() throws Exception {
 
         var hikariConfig = new HikariConfig();
         String jdbc = getJDBC();
-        //hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
         hikariConfig.setJdbcUrl(jdbc);
 
         var dataSource = new HikariDataSource(hikariConfig);
@@ -43,9 +50,10 @@ public class App {
         }
         BaseRepository.dataSource = dataSource;
 
-        var app = Javalin.create(/*config*/)
-                .get("/", ctx -> ctx.result("Hello World"))
-                .start(getPort());
+        var app = Javalin.create(config -> {
+            config.bundledPlugins.enableDevLogging();
+            config.fileRenderer(new JavalinJte(createTemplateEngine()));
+        });
         return app;
     }
 
@@ -62,7 +70,16 @@ public class App {
 
     private static String getJDBC() {
         String jdbc = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+        //String jdbc ="jdbc:postgresql://dpg-cq1vo8dds78s73ere86g-a:5432/db_rbh1?password=vQYT4Dk0oAfB140ET5GxaJPGsmjJ1Rm6&user=postgres_user";
         return String.valueOf(jdbc);
+    }
+
+
+    private static TemplateEngine createTemplateEngine() {
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+        TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+        return templateEngine;
     }
 
 }
