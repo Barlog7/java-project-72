@@ -38,6 +38,7 @@ public class App {
 
         var hikariConfig = new HikariConfig();
         String jdbc = getJDBC();
+        /*Class.forName("com.mysql.jdbc.Driver");*/
         hikariConfig.setJdbcUrl(jdbc);
 
         var dataSource = new HikariDataSource(hikariConfig);
@@ -70,7 +71,8 @@ public class App {
 
     private static String getJDBC() {
         String jdbc = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
-        //String jdbc ="jdbc:postgresql://dpg-cq1vo8dds78s73ere86g-a:5432/db_rbh1?password=vQYT4Dk0oAfB140ET5GxaJPGsmjJ1Rm6&user=postgres_user";
+        //String jdbc ="jdbc:postgresql://localhost:5432/postgres?password=1&user=barlog";
+        //String jdbc ="jdbc:postgresql://localhost:5432/postgres?password=password&user=postgres";
         return String.valueOf(jdbc);
     }
 
