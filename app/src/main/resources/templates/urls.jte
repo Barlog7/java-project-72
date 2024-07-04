@@ -1,0 +1,20 @@
+@import hexlet.code.NamedRoutes
+@import hexlet.code.dto.UrlPage
+@import java.sql.Timestamp
+@import java.util.Date
+@param  UrlPage urlPage
+
+@template.layout.page(
+pageIndex = urlPage,
+content = @`
+
+            <h1>Список URL</h1>
+    @for(var url : urlPage.getUrls())
+    <%--<div>${course.getName()}</div>--%>
+    <%--<h2><a href="/users/${user.getId()}">${user.getFirstName()} ${user.getLastName()}</a></h2>--%>
+        <%--<h2><a href="${NamedRoutes.usersPath(user.getId())}">${user.getName()}</a></h2>--%>
+        <p>${url.getId()} ${url.getName()} ${url.getCreatedAt().toString()}</p>
+    @endfor
+
+`
+)

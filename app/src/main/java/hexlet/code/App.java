@@ -2,6 +2,7 @@ package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import hexlet.code.controller.UrlController;
 import hexlet.code.repository.BaseRepository;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
@@ -29,6 +30,8 @@ public class App {
         var app = getApp();
 
         app.get("/", ctx -> ctx.render("main.jte"));
+        app.get("/urls", ctx -> ctx.render("urls.jte"));
+        app.post("/urls", UrlController::create);
 
 
         app.start(getPort());
