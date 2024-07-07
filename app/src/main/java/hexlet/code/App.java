@@ -3,6 +3,8 @@ package hexlet.code;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import hexlet.code.controller.UrlController;
+import hexlet.code.dto.MainPage;
+import hexlet.code.dto.UrlPage;
 import hexlet.code.repository.BaseRepository;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
@@ -20,6 +22,8 @@ import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
 
+import static io.javalin.rendering.template.TemplateUtil.model;
+
 @Slf4j
 public class App {
 
@@ -29,9 +33,20 @@ public class App {
         log.info("какой-то лог");
         var app = getApp();
 
-        app.get("/", ctx -> ctx.render("main.jte"));
-        app.get("/urls", ctx -> ctx.render("urls.jte"));
+        app.get("/", ctx -> {
+            String flash = ctx.consumeSessionAttribute("flash");
+            String status = ctx.consumeSessionAttribute("status");
+            var page = new MainPage();
+            page.setFlash(flash);
+            page.setStatus(status);
+            ctx.render("main.jte", model("mainPage", page));
+            //ctx.render("main.jte");
+        });
+        //app.get("/urls", ctx -> ctx.render("urls.jte"));
+        app.get("/urls", UrlController::index);
         app.post("/urls", UrlController::create);
+        //app.get("/urls", UrlController::index);
+        app.get("/urls/{id}", UrlController::show);
 
 
         app.start(getPort());

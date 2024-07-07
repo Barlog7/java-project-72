@@ -3,9 +3,9 @@ import hexlet.code.NamedRoutes;
 import hexlet.code.dto.MainPage;
 public final class JtemainGenerated {
 	public static final String JTE_NAME = "main.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,5,5,7,7,9,9,9,9,9,9,9,9,9,14,14,14,14,14,2,2,2,2};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,2,2,6,6,9,9,11,11,11,11,11,11,11,11,11,16,16,16,16,16,2,2,2,2};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, MainPage mainPage) {
-		jteOutput.writeContent("\n\n");
+		jteOutput.writeContent("\n\n\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
 				jteOutput.writeContent("\n\n            <form");
@@ -19,7 +19,7 @@ public final class JtemainGenerated {
 				}
 				jteOutput.writeContent(" method=\"post\">\n                <input type=\"text\" name=\"url\" value=\"\" placeholder=\"Ссылка\"/>\n                <input type=\"submit\" value=\"Проверить\"/>\n            </form>\n\n");
 			}
-		}, null);
+		}, mainPage);
 	}
 	public static void renderMap(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, java.util.Map<String, Object> params) {
 		MainPage mainPage = (MainPage)params.get("mainPage");

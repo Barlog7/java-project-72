@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public class UrlRepository extends BaseRepository{
@@ -38,6 +39,24 @@ public class UrlRepository extends BaseRepository{
                 return true;
             }
             return false;
+        }
+    }
+
+    public static Optional<Url> findUrl(Long id) throws SQLException {
+        var sql = "SELECT * FROM urls WHERE id = ?";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            var resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                //var id = resultSet.getLong("id");
+                var name = resultSet.getString("name");
+                var date = resultSet.getTimestamp("created_at");
+                var url = new Url(name, date);
+                url.setId(id);
+                return Optional.of(url);
+            }
+            return Optional.empty();
         }
     }
 
