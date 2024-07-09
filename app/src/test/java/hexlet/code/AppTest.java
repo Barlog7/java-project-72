@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class AppTest {
 
 
-    Javalin app;
+    private static Javalin app;
 
     @BeforeEach
     public final void setUp() throws Exception {
