@@ -13,7 +13,7 @@ content = @`
     <%--<div>${course.getName()}</div>--%>
     <%--<h2><a href="/users/${user.getId()}">${user.getFirstName()} ${user.getLastName()}</a></h2>--%>
         <%--<h2><a href="${NamedRoutes.usersPath(user.getId())}">${user.getName()}</a></h2>--%>
-        <p>${url.getId()} ${url.getName()} ${url.getCreatedAt().toString()}</p>
+        <%--<p>${url.getId()} ${url.getName()} ${url.getCreatedAt().toString()}</p>--%>
         <a href="${NamedRoutes.urlPath(url.getId())}">${url.getId()} ${url.getName()} ${url.getCreatedAt().toString()}</a>
     @endfor
 

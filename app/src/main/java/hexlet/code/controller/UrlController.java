@@ -8,12 +8,14 @@ import hexlet.code.repository.UrlRepository;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
+import static hexlet.code.utils.CheckUrl.checkStringToUrl;
 import static io.javalin.rendering.template.TemplateUtil.model;
 
 
@@ -21,6 +23,16 @@ public class UrlController {
     public static void create(Context ctx) throws SQLException {
         boolean isExist = false;
         var name = ctx.formParam("url");
+
+        var returnUrl = checkStringToUrl(name);
+        if (returnUrl.equals("-1")) {
+            ctx.sessionAttribute("flash", "Некорректный URL");
+            ctx.sessionAttribute("status", "notUrl");
+            ctx.redirect(NamedRoutes.basePath());
+            return;
+        } else {
+            name = returnUrl;
+        }
 
         isExist = UrlRepository.find(name);
         if (!isExist) {

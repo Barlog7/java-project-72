@@ -33,7 +33,7 @@ public class App {
         log.info("какой-то лог");
         var app = getApp();
 
-        app.get("/", ctx -> {
+       /* app.get("/", ctx -> {
             String flash = ctx.consumeSessionAttribute("flash");
             String status = ctx.consumeSessionAttribute("status");
             var page = new MainPage();
@@ -49,10 +49,14 @@ public class App {
         app.get("/urls/{id}", UrlController::show);
 
 
-        app.start(getPort());
+        app.start(getPort());*/
     }
 
     public static Javalin getApp() throws Exception {
+
+
+
+
 
         var hikariConfig = new HikariConfig();
         String jdbc = getJDBC();
@@ -73,6 +77,25 @@ public class App {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
+
+        app.get("/", ctx -> {
+            String flash = ctx.consumeSessionAttribute("flash");
+            String status = ctx.consumeSessionAttribute("status");
+            var page = new MainPage();
+            page.setFlash(flash);
+            page.setStatus(status);
+            ctx.render("main.jte", model("mainPage", page));
+            //ctx.render("main.jte");
+        });
+        //app.get("/urls", ctx -> ctx.render("urls.jte"));
+        app.get("/urls", UrlController::index);
+        app.post("/urls", UrlController::create);
+        //app.get("/urls", UrlController::index);
+        app.get("/urls/{id}", UrlController::show);
+
+
+        app.start(getPort());
+
         return app;
     }
 
