@@ -2,19 +2,14 @@ package hexlet.code.controller;
 
 import hexlet.code.NamedRoutes;
 import hexlet.code.dto.UrlPage;
-import hexlet.code.dto.idPage;
+import hexlet.code.dto.IdPage;
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlRepository;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
-
-import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Date;
-import java.util.List;
-
 import static hexlet.code.utils.CheckUrl.checkStringToUrl;
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -72,7 +67,7 @@ public class UrlController {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var url = UrlRepository.findUrl(id)
                 .orElseThrow(() -> new NotFoundResponse("Entity with id = " + id + " not found"));
-        var page = new idPage(url);
+        var page = new IdPage(url);
         ctx.render("show.jte", model("page", page));
     }
 }

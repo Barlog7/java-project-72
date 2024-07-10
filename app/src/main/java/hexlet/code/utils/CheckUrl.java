@@ -4,7 +4,7 @@ import java.net.URL;
 
 public class CheckUrl {
     public static String checkStringToUrl(String str) {
-    String urlString = "";
+        String urlString = "";
         try {
             var url = new URL(str);
             String protokol = url.getProtocol();

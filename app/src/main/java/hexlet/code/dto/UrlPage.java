@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UrlPage extends MainPage{
+public class UrlPage extends MainPage {
     private List<Url> urls;
 
 }

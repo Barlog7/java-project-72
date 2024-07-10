@@ -1,6 +1,6 @@
 package hexlet.code;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.LOCAL_DATE_TIME;
+//import static org.assertj.core.api.InstanceOfAssertFactories.LOCAL_DATE_TIME;
 
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlRepository;
@@ -9,9 +9,7 @@ import io.javalin.testtools.JavalinTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
-import java.io.IOException;
+//import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -69,7 +67,7 @@ public class AppTest {
 
         Date date = new Date();
         Timestamp ts = new Timestamp(date.getTime());
-        var url = new Url( "https://www.example.com", ts);
+        var url = new Url("https://www.example.com", ts);
         UrlRepository.save(url);
 
         JavalinTest.test(app, (server, client) -> {
