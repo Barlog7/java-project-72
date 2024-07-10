@@ -6,6 +6,7 @@ plugins {
     checkstyle
     id("io.freefair.lombok") version "8.4"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    jacoco
 }
 
 application {
@@ -54,4 +55,13 @@ tasks.test {
         // showCauses = true
         showStandardStreams = true
     }
+    finalizedBy(tasks.jacocoTestReport)
+
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)// tests are required to run before generating the report
+            reports {
+                xml.required = true
+            }
 }

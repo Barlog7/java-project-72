@@ -32,7 +32,7 @@ public class App {
         logger.info("Hello World");
         log.info("какой-то лог");
         var app = getApp();
-
+        app.start(getPort());
        /* app.get("/", ctx -> {
             String flash = ctx.consumeSessionAttribute("flash");
             String status = ctx.consumeSessionAttribute("status");
@@ -53,10 +53,6 @@ public class App {
     }
 
     public static Javalin getApp() throws Exception {
-
-
-
-
 
         var hikariConfig = new HikariConfig();
         String jdbc = getJDBC();
@@ -94,7 +90,7 @@ public class App {
         app.get("/urls/{id}", UrlController::show);
 
 
-        app.start(getPort());
+        //app.start(getPort());
 
         return app;
     }
