@@ -2,6 +2,7 @@ package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import hexlet.code.controller.UrlCheckController;
 import hexlet.code.controller.UrlController;
 import hexlet.code.dto.MainPage;
 import hexlet.code.repository.BaseRepository;
@@ -87,6 +88,7 @@ public class App {
         app.post("/urls", UrlController::create);
         //app.get("/urls", UrlController::index);
         app.get("/urls/{id}", UrlController::show);
+        app.get("/urls/{id}/checks", UrlCheckController::create);
 
 
         //app.start(getPort());

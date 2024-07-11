@@ -2,12 +2,15 @@ package gg.jte.generated.ondemand;
 import hexlet.code.NamedRoutes;
 import hexlet.code.dto.UrlPage;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 public final class JteurlsGenerated {
 	public static final String JTE_NAME = "urls.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,2,3,4,4,4,6,6,9,9,12,12,13,14,15,16,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,18,18,20,20,20,20,20,4,4,4,4};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,3,4,5,5,5,7,7,7,9,12,12,15,15,16,17,18,19,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,21,21,23,23,23,23,23,5,5,5,5};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, UrlPage urlPage) {
 		jteOutput.writeContent("\n");
+		var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		jteOutput.writeContent("\n\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
 			public void writeTo(gg.jte.html.HtmlTemplateOutput jteOutput) {
 				jteOutput.writeContent("\n\n            <h2>Список URL</h2>\n    ");
@@ -33,7 +36,7 @@ public final class JteurlsGenerated {
 					jteOutput.writeUserContent(url.getName());
 					jteOutput.writeContent(" ");
 					jteOutput.setContext("a", null);
-					jteOutput.writeUserContent(url.getCreatedAt().toString());
+					jteOutput.writeUserContent(url.getCreatedAt().toLocalDateTime().format(formatter));
 					jteOutput.writeContent("</a>\n    ");
 				}
 				jteOutput.writeContent("\n\n");

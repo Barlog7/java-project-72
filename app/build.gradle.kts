@@ -44,6 +44,8 @@ dependencies {
 
     testImplementation("org.assertj:assertj-core:3.25.3")
 
+    implementation("com.mashape.unirest:unirest-java:1.3.1")
+
 }
 
 tasks.test {

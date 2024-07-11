@@ -1,6 +1,7 @@
 package hexlet.code.utils;
 import java.net.MalformedURLException;
 import java.net.URL;
+/*import hexlet.code.model.UrlCheck;*/
 
 public class CheckUrl {
     public static String checkStringToUrl(String str) {
@@ -15,4 +16,5 @@ public class CheckUrl {
         }
         return urlString;
     }
+
 }
