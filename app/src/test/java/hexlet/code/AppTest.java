@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 //import java.io.IOException;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -92,7 +93,7 @@ public class AppTest {
         });
     }
     @Test
-    public void testUrlCheck() throws SQLException, InterruptedException, UnirestException {
+    public void testCheckExsist() throws SQLException, InterruptedException, UnirestException {
 
 
         HttpUrl baseUrl = server.url("/");
@@ -118,8 +119,33 @@ public class AppTest {
             assertThat(response.body().string()).contains("https://www.example.com");
         });*/
     }
+    @Test
+    public void testUrlCheck() throws SQLException, InterruptedException, UnirestException {
+
+
+        HttpUrl baseUrl = server.url("/");
+        var nameSait = server.url("/").toString();
+        URL urlName = baseUrl.url();
+        String protokol = urlName.getProtocol();
+        String body = urlName.getAuthority();
+        String urlString = protokol + "://" + body;
+
+        Date date = new Date();
+        Timestamp ts = new Timestamp(date.getTime());
+        var url = new Url(urlString, ts);
+        UrlRepository.save(url);
+
+        JavalinTest.test(app, (server, client) -> {
+
+            var response = client.get("/urls/" + url.getId() + "/checks");
+            assertThat(response.code()).isEqualTo(200);
+            assertThat(response.body().string()).contains(urlString);
+        });
+
+    }
     @AfterAll
     public static void setEnd() throws IOException {
         server.shutdown();
     }
+
 }
