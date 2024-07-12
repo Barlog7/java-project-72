@@ -32,7 +32,7 @@ public final class JteshowGenerated {
 				jteOutput.writeContent(" method=\"get\">\n        ");
 				jteOutput.writeContent("\n        <input type=\"submit\" value=\"Запустить проверку\"/>\n    </form>\n\n    ");
 				if (page.getUrlCheck() != null) {
-					jteOutput.writeContent("\n        <p>/n</p>\n        <div>Результаты проверки</div>\n        <div>");
+					jteOutput.writeContent("\n        <p> </p>\n        <div>Результаты проверки</div>\n        <div>");
 					jteOutput.setContext("div", null);
 					jteOutput.writeUserContent(page.getUrlCheck().getStatusCode().toString());
 					jteOutput.writeContent("</div>\n        <div>");
