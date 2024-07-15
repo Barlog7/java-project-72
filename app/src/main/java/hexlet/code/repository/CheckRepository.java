@@ -25,7 +25,6 @@ public class CheckRepository extends BaseRepository {
             preparedStatement.setTimestamp(6, urlCheck.getCreatedAt());
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
-            // Устанавливаем ID в сохраненную сущность
             if (generatedKeys.next()) {
                 urlCheck.setId(generatedKeys.getLong(1));
             } else {
@@ -64,17 +63,4 @@ public class CheckRepository extends BaseRepository {
         }
     }
 
-/*    public static boolean find(String name) throws SQLException {
-        var sql = "SELECT * FROM url_checks WHERE urlId = ?";
-        log.info(sql);
-        try (var conn = dataSource.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, name);
-            var resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-            return false;
-        }
-    }*/
 }

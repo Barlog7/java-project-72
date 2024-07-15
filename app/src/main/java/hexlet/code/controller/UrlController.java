@@ -36,15 +36,9 @@ public class UrlController {
             Timestamp timestamp = new Timestamp(date.getTime());
             var url = new Url(name, timestamp);
             UrlRepository.save(url);
-            //ctx.sessionAttribute("status", "запись создана");
             ctx.sessionAttribute("flash", "Запись создана");
             ctx.sessionAttribute("status", "ok");
-/*            *//*ctx.redirect(NamedRoutes.urlsPath());*//*
 
-            var page = new UrlPage();
-
-            page.setUrls(UrlRepository.getEntities());
-            ctx.render("urls.jte", model("urlPage", page));*/
             ctx.redirect(NamedRoutes.urlsPath());
         } else {
             ctx.sessionAttribute("flash", "Запись уже существует");

@@ -33,30 +33,13 @@ public class App {
         log.info("какой-то лог");
         var app = getApp();
         app.start(getPort());
-       /* app.get("/", ctx -> {
-            String flash = ctx.consumeSessionAttribute("flash");
-            String status = ctx.consumeSessionAttribute("status");
-            var page = new MainPage();
-            page.setFlash(flash);
-            page.setStatus(status);
-            ctx.render("main.jte", model("mainPage", page));
-            //ctx.render("main.jte");
-        });
-        //app.get("/urls", ctx -> ctx.render("urls.jte"));
-        app.get("/urls", UrlController::index);
-        app.post("/urls", UrlController::create);
-        //app.get("/urls", UrlController::index);
-        app.get("/urls/{id}", UrlController::show);
 
-
-        app.start(getPort());*/
     }
 
     public static Javalin getApp() throws Exception {
 
         var hikariConfig = new HikariConfig();
         String jdbc = getJDBC();
-        /*Class.forName("com.mysql.jdbc.Driver");*/
         hikariConfig.setJdbcUrl(jdbc);
 
         var dataSource = new HikariDataSource(hikariConfig);
@@ -81,17 +64,13 @@ public class App {
             page.setFlash(flash);
             page.setStatus(status);
             ctx.render("main.jte", model("mainPage", page));
-            //ctx.render("main.jte");
         });
-        //app.get("/urls", ctx -> ctx.render("urls.jte"));
+
         app.get("/urls", UrlController::index);
         app.post("/urls", UrlController::create);
         //app.get("/urls", UrlController::index);
         app.get("/urls/{id}", UrlController::show);
         app.get("/urls/{id}/checks", UrlCheckController::create);
-
-
-        //app.start(getPort());
 
         return app;
     }
@@ -109,11 +88,8 @@ public class App {
 
     private static String getJDBC() {
         String jdbc = System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
-        //String jdbc ="jdbc:postgresql://localhost:5432/postgres?password=1&user=barlog";
-        //String jdbc ="jdbc:postgresql://localhost:5432/postgres?password=password&user=postgres";
         return String.valueOf(jdbc);
     }
-
 
     private static TemplateEngine createTemplateEngine() {
         ClassLoader classLoader = App.class.getClassLoader();

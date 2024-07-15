@@ -40,6 +40,7 @@ public class AppTest {
                 "    <meta charset=\"utf-8\">\n" +
                 "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+                "    <meta name=\"description\" content=\"Описание сайта\">\n" +
                 "    <style type=\"text/css\">\n" +
                 "    body {\n" +
                 "        background-color: #f0f0f2;\n" +
@@ -71,7 +72,7 @@ public class AppTest {
                 "\n" +
                 "<body>\n" +
                 "<div>\n" +
-                "    <h1>Example Domain</h1>\n" +
+                "    <h1>Example Domain Header</h1>\n" +
                 "    <p>This domain is for use in illustrative examples in documents. You may use this\n" +
                 "    domain in literature without prior coordination or asking for permission.</p>\n" +
                 "    <p><a href=\"https://www.iana.org/domains/example\">More information...</a></p>\n" +
@@ -143,25 +144,14 @@ public class AppTest {
         HttpUrl baseUrl = server.url("/");
         var nameSait = server.url("/").toString();
 
-/*        Date date = new Date();
-        Timestamp ts = new Timestamp(date.getTime());
-        var url = new Url("https://www.example.com", ts);
-        UrlRepository.save(url);*/
-        //RecordedRequest request1 = server.takeRequest();
-        //request1.getBody();
-        //nameSait = "https://www.exampleWWWWWWWWW.com";
+
         var urlCheck = checkExsist(nameSait, 1L);
         assertThat(urlCheck.getStatusCode()).isEqualTo(200);
         assertThat(urlCheck.getTitle()).isEqualTo("Example Domain");
+        assertThat(urlCheck.getH1()).isEqualTo("Example Domain Header");
+        assertThat(urlCheck.getDescription()).isEqualTo("Описание сайта");
 
-        //Chat chat = new Chat(baseUrl);
 
-       /* JavalinTest.test(app, (server, client) -> {
-            //var response = client.get("/urls/" + url.getId());
-            var response = client.get("/urls/" + url.getId() +"/checks");
-            assertThat(response.code()).isEqualTo(200);
-            assertThat(response.body().string()).contains("https://www.example.com");
-        });*/
     }
     @Test
     public void testUrlCheck() throws SQLException, InterruptedException, UnirestException {

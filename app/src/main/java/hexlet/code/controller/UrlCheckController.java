@@ -20,7 +20,6 @@ public class UrlCheckController {
         String urlSring = url.getName() + "/";
 
         UrlCheck urlCheck = checkExsist(urlSring, id);
-        //urlCheck.setId(id);
         CheckRepository.save(urlCheck);
         ctx.sessionAttribute("flash", "Запись о проверке создана");
         ctx.sessionAttribute("status", "ok");
