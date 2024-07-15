@@ -4,7 +4,7 @@ import hexlet.code.dto.IdPage;
 import java.time.format.DateTimeFormatter;
 public final class JteshowGenerated {
 	public static final String JTE_NAME = "show.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,2,3,3,3,5,5,5,7,9,9,10,10,10,11,11,11,12,12,12,14,14,14,14,14,14,14,14,14,15,19,19,22,22,22,23,23,23,24,24,24,25,25,25,26,26,26,27,27,30,30,30,30,30,3,3,3,3};
+	public static final int[] JTE_LINE_INFO = {0,0,1,2,3,3,3,5,5,5,7,9,9,10,10,10,11,11,11,12,12,12,14,14,14,14,14,14,14,14,14,15,19,19,22,31,31,31,32,32,32,33,33,33,34,34,34,35,35,35,36,36,39,39,39,39,39,3,3,3,3};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, IdPage page) {
 		jteOutput.writeContent("\n");
 		var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -32,19 +32,20 @@ public final class JteshowGenerated {
 				jteOutput.writeContent(" method=\"get\">\n        ");
 				jteOutput.writeContent("\n        <input type=\"submit\" value=\"Запустить проверку\"/>\n    </form>\n\n    ");
 				if (page.getUrlCheck() != null) {
-					jteOutput.writeContent("\n        <p> </p>\n        <div>Результаты проверки</div>\n        <div>");
+					jteOutput.writeContent("\n        <p> </p>\n        <div>Результаты проверки</div>\n");
+					jteOutput.writeContent("\n        <div>Код возврата: ");
 					jteOutput.setContext("div", null);
 					jteOutput.writeUserContent(page.getUrlCheck().getStatusCode().toString());
-					jteOutput.writeContent("</div>\n        <div>");
+					jteOutput.writeContent("</div>\n        <div>название (title): ");
 					jteOutput.setContext("div", null);
 					jteOutput.writeUserContent(page.getUrlCheck().getTitle());
-					jteOutput.writeContent("</div>\n        <div>");
+					jteOutput.writeContent("</div>\n        <div>Заголовок (H1): ");
 					jteOutput.setContext("div", null);
 					jteOutput.writeUserContent(page.getUrlCheck().getH1());
-					jteOutput.writeContent("</div>\n        <div>");
+					jteOutput.writeContent("</div>\n        <div>Описание: ");
 					jteOutput.setContext("div", null);
 					jteOutput.writeUserContent(page.getUrlCheck().getDescription());
-					jteOutput.writeContent("</div>\n        <div>");
+					jteOutput.writeContent("</div>\n        <div>Дата проверки: ");
 					jteOutput.setContext("div", null);
 					jteOutput.writeUserContent(page.getUrlCheck().getCreatedAt().toLocalDateTime().format(formatter));
 					jteOutput.writeContent("</div>\n    ");

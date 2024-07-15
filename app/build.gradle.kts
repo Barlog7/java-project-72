@@ -47,6 +47,8 @@ dependencies {
 
     implementation("com.mashape.unirest:unirest-java:1.3.1")
 
+    implementation("org.jsoup:jsoup:1.18.1")
+
 }
 
 tasks.test {

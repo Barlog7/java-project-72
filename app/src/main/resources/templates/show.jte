@@ -19,11 +19,20 @@ content = @`
     @if(page.getUrlCheck() != null)
         <p> </p>
         <div>Результаты проверки</div>
-        <div>${page.getUrlCheck().getStatusCode().toString()}</div>
-        <div>${page.getUrlCheck().getTitle()}</div>
-        <div>${page.getUrlCheck().getH1()}</div>
-        <div>${page.getUrlCheck().getDescription()}</div>
-        <div>${page.getUrlCheck().getCreatedAt().toLocalDateTime().format(formatter)}</div>
+<%--        <table>
+            <tr>
+                <td>${page.getUrlCheck().getStatusCode().toString()}</td>
+                <td>$${page.getUrlCheck().getTitle()}</td>
+                <td>${page.getUrlCheck().getH1()}</td>
+                <td>${page.getUrlCheck().getDescription()}</td>
+                <td>${page.getUrlCheck().getCreatedAt().toLocalDateTime().format(formatter)}</td>
+            </tr>
+        </table>--%>
+        <div>Код возврата: ${page.getUrlCheck().getStatusCode().toString()}</div>
+        <div>название (title): ${page.getUrlCheck().getTitle()}</div>
+        <div>Заголовок (H1): ${page.getUrlCheck().getH1()}</div>
+        <div>Описание: ${page.getUrlCheck().getDescription()}</div>
+        <div>Дата проверки: ${page.getUrlCheck().getCreatedAt().toLocalDateTime().format(formatter)}</div>
     @endif
 
 
