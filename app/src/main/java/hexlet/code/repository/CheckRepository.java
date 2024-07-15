@@ -1,6 +1,5 @@
 package hexlet.code.repository;
 
-import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
 
 import java.sql.SQLException;
@@ -12,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
-        String sql = "INSERT INTO url_checks (statusCode, title, h1, description, urlId, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO url_checks"
+                + " (statusCode, title, h1, description, urlId, created_at)"
+                + " VALUES (?, ?, ?, ?, ?, ?)";
         log.info(sql);
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
