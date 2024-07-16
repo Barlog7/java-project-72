@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 import gg.jte.ContentType;
@@ -27,7 +28,7 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 @Slf4j
 public class App {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws SQLException, IOException {
         Logger logger = LoggerFactory.getLogger(App.class);
         logger.info("Hello World");
         log.info("какой-то лог");
@@ -36,7 +37,7 @@ public class App {
 
     }
 
-    public static Javalin getApp() throws Exception {
+    public static Javalin getApp() throws IOException, SQLException {
 
         var hikariConfig = new HikariConfig();
         String jdbc = getJDBC();
