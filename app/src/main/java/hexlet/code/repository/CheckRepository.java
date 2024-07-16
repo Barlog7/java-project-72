@@ -4,6 +4,7 @@ import hexlet.code.model.UrlCheck;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,35 @@ public class CheckRepository extends BaseRepository {
                 return Optional.of(url);
             }
             return Optional.empty();
+        }
+    }
+    public static String findStatusCheck(Long id) throws SQLException {
+        var sql = "SELECT status_code FROM url_checks WHERE url_id = ?";
+        String returnCode = "пусто";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            var resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                returnCode = String.valueOf(resultSet.getInt("status_code"));
+
+            }
+            return returnCode;
+        }
+    }
+    public static String findDateTimeCheck(Long id) throws SQLException {
+        var sql = "SELECT created_at FROM url_checks WHERE url_id = ?";
+        //String returnCode = " ";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            var resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                var date = resultSet.getTimestamp("created_at");
+                var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                return date.toLocalDateTime().format(formatter);
+            }
+            return "пусто";
         }
     }
 

@@ -23,4 +23,5 @@ public class UrlCheck {
         this.urlId = urlId;
         this.createdAt = createdAt;
     }
+
 }

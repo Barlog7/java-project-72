@@ -11,9 +11,12 @@ public class Url {
     private Long id;
     private String name;
     private Timestamp createdAt;
+    private String status;
+    private Timestamp dateStatus;
 
     public Url(String name, Timestamp createdAt) {
         this.name = name;
         this.createdAt = createdAt;
     }
+
 }
