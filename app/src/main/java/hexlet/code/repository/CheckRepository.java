@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
         String sql = "INSERT INTO url_checks"
-                + " (statuscode, title, h1, description, url_id, created_at)"
+                + " (status_code, title, h1, description, url_id, created_at)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
         log.info(sql);
         try (var conn = dataSource.getConnection();
@@ -50,7 +50,7 @@ public class CheckRepository extends BaseRepository {
             var resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 var idMain = resultSet.getLong("id");
-                var statusCode = resultSet.getInt("statuscode");
+                var statusCode = resultSet.getInt("status_code");
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
