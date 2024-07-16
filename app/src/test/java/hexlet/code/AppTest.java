@@ -31,7 +31,7 @@ public class AppTest {
     private static MockWebServer server;
 
     @BeforeEach
-    public final void setUp() throws Exception {
+    public final void setUp() throws Exception, IOException, SQLException {
         app = App.getApp();
         server = new MockWebServer();
         server.enqueue(new MockResponse().setBody("<head>\n"
@@ -152,6 +152,16 @@ public class AppTest {
         assertThat(urlCheck.getTitle()).isEqualTo("Example Domain");
         assertThat(urlCheck.getH1()).isEqualTo("Example Domain Header");
         assertThat(urlCheck.getDescription()).isEqualTo("Описание сайта");
+
+
+    }
+    @Test
+    public void testCheckNotExsist() throws SQLException, InterruptedException, UnirestException {
+
+        var nameSait = "https://www.notexsist.com/";
+
+        var urlCheck = checkExsist(nameSait, 1L);
+        assertThat(urlCheck.getStatusCode()).isEqualTo(404);
 
 
     }
