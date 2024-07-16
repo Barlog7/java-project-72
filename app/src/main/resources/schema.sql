@@ -14,6 +14,6 @@ CREATE TABLE url_checks (
     title VARCHAR(255),
     h1 VARCHAR(255),
     description text,
-    urlId bigint REFERENCES urls (ID),
+    urlid bigint REFERENCES urls (ID),
     created_at TIMESTAMP NOT NULL
 );
