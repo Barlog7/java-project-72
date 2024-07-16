@@ -71,7 +71,7 @@ public class App {
         app.post("/urls", UrlController::create);
         //app.get("/urls", UrlController::index);
         app.get("/urls/{id}", UrlController::show);
-        app.get("/urls/{id}/checks", UrlCheckController::create);
+        app.post("/urls/{id}/checks", UrlCheckController::create);
 
         return app;
     }

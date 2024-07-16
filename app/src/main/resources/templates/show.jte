@@ -11,7 +11,7 @@ content = @`
     <div>${page.getUrl().getName()}</div>
     <div>${page.getUrl().getCreatedAt().toLocalDateTime().format(formatter)}</div>
 
-    <form action="${NamedRoutes.urlPathCheck(page.getUrl().getId())}" method="get">
+    <form action="${NamedRoutes.urlPathCheck(page.getUrl().getId())}" method="post">
         <%--<input type="text" name="url" value="" placeholder="Ссылка"/>--%>
         <input type="submit" value="Запустить проверку"/>
     </form>
