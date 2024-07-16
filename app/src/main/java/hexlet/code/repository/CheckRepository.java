@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
         String sql = "INSERT INTO url_checks"
-                + " (statusCode, title, h1, description, urlid, created_at)"
+                + " (statusCode, title, h1, description, url_id, created_at)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
         log.info(sql);
         try (var conn = dataSource.getConnection();
@@ -33,7 +33,7 @@ public class CheckRepository extends BaseRepository {
         }
     }
     public static void delete(Long id) throws SQLException {
-        String sql = "DELETE FROM url_checks where urlid = ?";
+        String sql = "DELETE FROM url_checks where url_id = ?";
         log.info(sql);
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -43,7 +43,7 @@ public class CheckRepository extends BaseRepository {
         }
     }
     public static Optional<UrlCheck> findUrl(Long id) throws SQLException {
-        var sql = "SELECT * FROM url_checks WHERE urlid = ?";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
