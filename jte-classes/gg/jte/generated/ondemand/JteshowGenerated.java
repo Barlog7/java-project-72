@@ -29,7 +29,7 @@ public final class JteshowGenerated {
 					jteOutput.setContext("form", null);
 					jteOutput.writeContent("\"");
 				}
-				jteOutput.writeContent(" method=\"get\">\n        ");
+				jteOutput.writeContent(" method=\"post\">\n        ");
 				jteOutput.writeContent("\n        <input type=\"submit\" value=\"Запустить проверку\"/>\n    </form>\n\n    ");
 				if (page.getUrlCheck() != null) {
 					jteOutput.writeContent("\n        <p> </p>\n        <div>Результаты проверки</div>\n");
