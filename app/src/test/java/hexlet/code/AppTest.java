@@ -31,7 +31,7 @@ public class AppTest {
     private static MockWebServer server;
 
     @BeforeEach
-    public final void setUp() throws Exception, IOException, SQLException {
+    public final void setUp() throws IOException, SQLException, Exception {
         app = App.getApp();
         server = new MockWebServer();
         server.enqueue(new MockResponse().setBody("<head>\n"
