@@ -1,4 +1,5 @@
 package hexlet.code;
+import static hexlet.code.repository.UrlRepository.find;
 import static hexlet.code.utils.CheckUrl.checkExsist;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlRepository;
+import hexlet.code.repository.CheckRepository;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
 
@@ -17,11 +19,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 
 public class AppTest {
@@ -34,54 +40,13 @@ public class AppTest {
     public final void setUp() throws IOException, SQLException {
         app = App.getApp();
         server = new MockWebServer();
-        server.enqueue(new MockResponse().setBody("<head>\n"
-                +                "    <title>Example Domain</title>\n"
-                +                "\n"
-                +                "    <meta charset=\"utf-8\">\n"
-                +                "    <meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\">\n"
-                +                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
-                +                "    <meta name=\"description\" content=\"Описание сайта\">\n"
-                +                "    <style type=\"text/css\">\n"
-                +                "    body {\n"
-                +                "        background-color: #f0f0f2;\n"
-                +                "        margin: 0;\n"
-                +                "        padding: 0;\n"
-                +                "        font-family: "
-                +                "-apple-system, system-ui, BlinkMacSystemFont, \"Segoe UI\", \"Open Sans\","
-                +                " \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n"
-                +                "        \n"
-                +                "    }\n"
-                +                "    div {\n"
-                +                "        width: 600px;\n"
-                +                "        margin: 5em auto;\n"
-                +                "        padding: 2em;\n"
-                +                "        background-color: #fdfdff;\n"
-                +                "        border-radius: 0.5em;\n"
-                +                "        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);\n"
-                +                "    }\n"
-                +                "    a:link, a:visited {\n"
-                +                "        color: #38488f;\n"
-                +                "        text-decoration: none;\n"
-                +                "    }\n"
-                +                "    @media (max-width: 700px) {\n"
-                +                "        div {\n"
-                +                "            margin: 0 auto;\n"
-                +                "            width: auto;\n"
-                +                "        }\n"
-                +                "    }\n"
-                +                "    </style>    \n"
-                +                "</head>\n"
-                +                "\n"
-                +                "<body>\n"
-                +                "<div>\n"
-                + "    <h1>Example Domain Header</h1>\n"
-                + "    <p>This domain is for use in illustrative examples in documents. You may use this\n"
-                + "    domain in literature without prior coordination or asking for permission.</p>\n"
-                + "    <p><a href=\"https://www.iana.org/domains/example\">More information...</a></p>\n"
-                +  "</div>\n"
-                +  "\n"
-                +  "\n"
-                +  "</body>"));
+        String stringBody = "";
+        var inputStream = App.class.getClassLoader().getResourceAsStream("exampleBody.html");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            stringBody = reader.lines().collect(Collectors.joining("\n"));
+        }
+        server.enqueue(new MockResponse().setBody(stringBody));
+
         server.start();
 
     }
@@ -104,6 +69,8 @@ public class AppTest {
             var response = client.post("/urls", requestBody);
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string()).contains("https://www.example.com");
+            boolean existUrl = find("https://www.example.com");
+            assertThat(existUrl).isTrue();
         });
     }
 
@@ -137,7 +104,10 @@ public class AppTest {
             var response = client.get("/urls/" + url.getId());
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string()).contains("https://www.example.com");
+            boolean existUrl = find("https://www.example.com");
+            assertThat(existUrl).isTrue();
         });
+
     }
     @Test
     public void testCheckExsist() throws SQLException, InterruptedException, UnirestException {
@@ -187,6 +157,9 @@ public class AppTest {
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string()).contains(urlString);
         });
+        var urlGetFromBase = CheckRepository.findUrl(url.getId());
+        boolean existUrl = urlGetFromBase.isPresent();
+        assertThat(existUrl).isTrue();
 
     }
     @AfterAll
