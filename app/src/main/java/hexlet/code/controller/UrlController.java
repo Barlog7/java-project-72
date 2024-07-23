@@ -9,8 +9,6 @@ import hexlet.code.repository.UrlRepository;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import static hexlet.code.utils.CheckUrl.checkStringToUrl;
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -32,9 +30,7 @@ public class UrlController {
 
         isExist = UrlRepository.find(name);
         if (!isExist) {
-            Date date = new Date();
-            Timestamp timestamp = new Timestamp(date.getTime());
-            var url = new Url(name, timestamp);
+            var url = new Url(name);
             UrlRepository.save(url);
             ctx.sessionAttribute("flash", "Запись создана");
             ctx.sessionAttribute("status", "ok");
@@ -54,6 +50,7 @@ public class UrlController {
         page.setFlash(flash);
         page.setStatus(status);
         page.setUrls(UrlRepository.getEntities());
+        page.setMapChecks(CheckRepository.getChecksMap());
         ctx.render("urls.jte", model("urlPage", page));
 
     }

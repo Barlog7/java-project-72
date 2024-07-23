@@ -1,15 +1,11 @@
 @import hexlet.code.NamedRoutes
 @import hexlet.code.dto.UrlPage
-@import java.sql.Timestamp
 @import java.time.format.DateTimeFormatter
-@import java.util.Date
-@import static hexlet.code.repository.CheckRepository.findStatusCheck
-@import static hexlet.code.repository.CheckRepository.findDateTimeCheck
-@import static hexlet.code.repository.CheckRepository.findUrl
 @import hexlet.code.model.UrlCheck
 @param  UrlPage urlPage
 
 !{var formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");}
+!{final String EMPTY = "пусто";}
 
 
 @template.layout.page(
@@ -28,8 +24,14 @@ content = @`
     var status = " ";
     var dateCheck = " ";
     try {
-        status = findStatusCheck(url.getId());
-        dateCheck = findDateTimeCheck(url.getId());
+        UrlCheck check = urlPage.getMapChecks().get(url.getId());
+        if (check == null) {
+            status = EMPTY;
+            dateCheck = EMPTY;
+        } else {
+            status = String.valueOf(check.getStatusCode());
+            dateCheck = check.getCreatedAt().toLocalDateTime().format(formatter);
+        }
     }
     catch (Exception e) {}
 

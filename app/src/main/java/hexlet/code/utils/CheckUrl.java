@@ -7,8 +7,6 @@ import org.jsoup.Jsoup;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.util.Date;
 
 public class CheckUrl {
     public static String checkStringToUrl(String str) {
@@ -27,8 +25,6 @@ public class CheckUrl {
         HttpResponse<String> response = null;
         int code = 0;
         String body = null;
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
         try {
             response = Unirest
                     .get(url)
@@ -39,7 +35,7 @@ public class CheckUrl {
         } catch (UnirestException e) {
             code = 404;
             body = null;
-            var urlCheck = new UrlCheck(code, "", "", "", id, timestamp);
+            var urlCheck = new UrlCheck(code, "", "", "", id);
             return urlCheck;
         }
 
@@ -50,7 +46,7 @@ public class CheckUrl {
         String h1  = h1Elemetnt == null ? "" : h1Elemetnt.text();
         String description = document.select("meta[name=description]").attr("content");
 
-        var urlCheck = new UrlCheck(code, title, h1, description, id, timestamp);
+        var urlCheck = new UrlCheck(code, title, h1, description, id);
         return urlCheck;
     }
 

@@ -18,7 +18,6 @@ public class UrlCheckController {
                 .orElseThrow(() -> new NotFoundResponse("Entity with id = " + id + " not found"));
         CheckRepository.delete(id);
         String urlSring = url.getName() + "/";
-
         UrlCheck urlCheck = checkExsist(urlSring, id);
         CheckRepository.save(urlCheck);
         ctx.sessionAttribute("flash", "Запись о проверке создана");

@@ -1,17 +1,25 @@
 package hexlet.code.repository;
 
+
 import hexlet.code.model.UrlCheck;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
+import java.util.HashMap;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+        urlCheck.setCreatedAt(timestamp);
         String sql = "INSERT INTO url_checks"
                 + " (status_code, title, h1, description, url_id, created_at)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
@@ -63,6 +71,27 @@ public class CheckRepository extends BaseRepository {
             return Optional.empty();
         }
     }
+    public static Map<Long, UrlCheck> getChecksMap() throws SQLException {
+        var sql = "SELECT * FROM url_checks";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            var resultSet = stmt.executeQuery();
+            var result = new HashMap<Long, UrlCheck>();
+            while (resultSet.next()) {
+                var idMain = resultSet.getLong("id");
+                var statusCode = resultSet.getInt("status_code");
+                var title = resultSet.getString("title");
+                var h1 = resultSet.getString("h1");
+                var description = resultSet.getString("description");
+                var date = resultSet.getTimestamp("created_at");
+                var url = new UrlCheck(statusCode, title, h1, description, idMain, date);
+                url.setId(idMain);
+                result.put(idMain, url);
+            }
+            return result;
+        }
+    }
+
     public static String findStatusCheck(Long id) throws SQLException {
         var sql = "SELECT status_code FROM url_checks WHERE url_id = ?";
         String returnCode = "пусто";
